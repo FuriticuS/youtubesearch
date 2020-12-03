@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from "react-router-dom";
 import { Form, Input, Button} from 'antd';
 const layout = {
     labelCol: {
@@ -16,6 +17,9 @@ const tailLayout = {
 };
 
 const Auth = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
     const onFinish = (values) => {
         console.log('Success:', values);
     };
@@ -23,6 +27,24 @@ const Auth = () => {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    const doLogin = async () => {
+        let response = await fetch('/db.JSON');
+
+        response.json().then((data)=>{
+           const user = data.users.find(user => ((user.name === username) && (user.password === password)));
+           if(user){
+                localStorage.setItem('user', JSON.stringify(user));
+                setUsername('');
+                setPassword('');
+            } 
+
+        }).catch(()=>{});
+    }
+
+    if(localStorage.getItem('user')){
+        return <Redirect to="/main" />
+    }
 
     return (
         <div>
@@ -45,7 +67,7 @@ const Auth = () => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input onChange={(e)=>{ setUsername(e.target.value) }} />
                 </Form.Item>
 
                 <Form.Item
@@ -58,11 +80,11 @@ const Auth = () => {
                         },
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password onChange={(e)=>{ setPassword(e.target.value) }} />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
+                    <Button onClick={doLogin} type="primary" htmlType="submit">
                         Submit
                     </Button>
                 </Form.Item>
