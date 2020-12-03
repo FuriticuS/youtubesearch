@@ -17,27 +17,19 @@ const tailLayout = {
 };
 
 const Auth = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
 
     const doLogin = async () => {
         let response = await fetch('/db.JSON');
 
         response.json().then((data)=>{
-           const user = data.users.find(user => ((user.name === username) && (user.password === password)));
+           const user = data.users.find(user => ((user.email === email) && (user.password === password)));
            if(user){
                 localStorage.setItem('user', JSON.stringify(user));
-                setUsername('');
+                setEmail('');
                 setPassword('');
-            } 
+            }
 
         }).catch(()=>{});
     }
@@ -54,8 +46,6 @@ const Auth = () => {
                 initialValues={{
                     remember: true,
                 }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
             >
                 <Form.Item
                     label="Username"
@@ -67,7 +57,7 @@ const Auth = () => {
                         },
                     ]}
                 >
-                    <Input onChange={(e)=>{ setUsername(e.target.value) }} />
+                    <Input onChange={(e)=>{ setEmail(e.target.value) }} />
                 </Form.Item>
 
                 <Form.Item
