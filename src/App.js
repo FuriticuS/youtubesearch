@@ -1,9 +1,13 @@
 import './App.css';
+import Auth from "./Components/Auth/Auth";
+import Main from "./Components/Main/Main";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello</h1>
+      <Auth/>
+
+      <Main/>
     </div>
   );
 }

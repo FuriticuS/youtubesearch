@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "idToken": "sadfaiel123rwfsdf12354",
+      "name": "admin",
+      "password": "123qwe",
+      "email": "fur1ous@ya.ru"
+    },
+    {
+      "id": 1,
+      "idToken": "sadfaiel123rwfsdf3123",
+      "name": "admin2",
+      "password": "123qweasd",
+      "email": "2fur1ous@ya.ru"
+    },
+    {
+      "id": 3,
+      "idToken": "sadfaiel123rwfsdfа324м",
+      "name": "admin3",
+      "password": "123321",
+      "email": "123@ya.ru"
+    }
+    ]
+}
