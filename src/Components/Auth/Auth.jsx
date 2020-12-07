@@ -1,84 +1,103 @@
-import React, { useState } from 'react';
-import { Redirect } from "react-router-dom";
-import { Form, Input, Button} from 'antd';
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
+import React, {useState} from 'react';
+import {Redirect} from "react-router-dom";
+import {block} from 'bem-cn';
+import {Form, Input, Button} from 'antd';
+import "antd/dist/antd.css";
+import Logo from "../../Img/logo";
+
+import './auth.scss';
+
+const cn = block('auth');
 
 const Auth = () => {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const doLogin = async () => {
         let response = await fetch('/db.JSON');
 
-        response.json().then((data)=>{
-           const user = data.users.find(user => ((user.email === email) && (user.password === password)));
-           if(user){
+        response.json().then((data) => {
+            const user = data.users.find(user => (user.email === email && user.password === password));
+
+            if (user && user.idToken !== '') {
                 localStorage.setItem('user', JSON.stringify(user));
                 setEmail('');
                 setPassword('');
             }
 
-        }).catch(()=>{});
+            if (!user) {
+                alert("Логин или пароль указаны неверно!")
+            }
+
+            if (user.idToken === '') {
+                alert("У юзера отсутствует TOKEN")
+            }
+
+        }).catch(() => {
+        });
     }
 
-    if(localStorage.getItem('user')){
-        return <Redirect to="/main" />
+    if (localStorage.getItem('user')) {
+        return <Redirect to="/main"/>
     }
+
 
     return (
-        <div>
-            <Form
-                {...layout}
-                name="basic"
-                initialValues={{
-                    remember: true,
-                }}
-            >
-                <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your username!',
-                        },
-                    ]}
-                >
-                    <Input onChange={(e)=>{ setEmail(e.target.value) }} />
-                </Form.Item>
+        <div className={cn()}>
 
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                >
-                    <Input.Password onChange={(e)=>{ setPassword(e.target.value) }} />
-                </Form.Item>
+            <div className={cn("top")}>
+                <Logo width="88" height="88"/>
 
-                <Form.Item {...tailLayout}>
-                    <Button onClick={doLogin} type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+                <h3>Вход</h3>
+            </div>
+
+            <div className={cn("bottom")}>
+                <Form
+                    name="basic"
+                    layout="vertical"
+                    initialValues={{
+                        remember: true,
+                    }}
+                >
+                    <Form.Item
+                        label="Логин"
+                        name="username"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Введите свой логин',
+                            },
+                        ]}
+                    >
+                        <Input onChange={(e) => {
+                            setEmail(e.target.value)
+                        }}/>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Пароль"
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Введите свой пароль',
+                            },
+                        ]}
+                    >
+                        <Input.Password onChange={(e) => {
+                            setPassword(e.target.value)
+                        }}/>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button onClick={doLogin} type="primary" htmlType="submit">
+                            Войти
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
+
         </div>
     );
 };

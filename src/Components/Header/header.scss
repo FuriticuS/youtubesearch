@@ -1,0 +1,56 @@
+.header {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  background: #FFFFFF;
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+
+    .links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 100%;
+      margin-left:55px;
+
+      svg {
+        width: 48px;
+      }
+
+      li {
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        height: 100%;
+        margin-right: 40px;
+
+        a{
+          display: flex;
+          justify-content:center;
+          align-items: center;
+          height: 100%;
+        }
+      }
+    }
+
+    .active {
+      border-bottom: 2px solid #1390E5;
+    }
+  }
+  &__out{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    height: 100%;
+  }
+}

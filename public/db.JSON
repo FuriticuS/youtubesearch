@@ -3,18 +3,18 @@
     {
       "id": 0,
       "idToken": "sadfaiel123rwfsdf12354",
-      "email": "fur1ous@ya.ru",
-      "password": "123qwe"
+      "email": "admin@ya.ru",
+      "password": "123321"
     },
     {
       "id": 1,
       "idToken": "sadfaiel123rwfsdf3123",
-      "email": "2fur1ous@ya.ru",
-      "password": "123qweasd"
+      "email": "admin2@ya.ru",
+      "password": "qweewq"
     },
     {
       "id": 3,
-      "idToken": "sadfaiel123rwfsdfа324м",
+      "idToken": "",
       "email": "123@ya.ru",
       "password": "123321"
     }
